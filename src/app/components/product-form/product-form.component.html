@@ -1,0 +1,35 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="p-3 border rounded">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input id="name" formControlName="name" class="form-control">
+      @if (productForm.get('name')?.invalid && productForm.get('name')?.touched) {
+        <div class="text-danger">Name is required.</div>
+      }
+    </div>
+  
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <input id="description" formControlName="description" class="form-control">
+      @if (productForm.get('description')?.invalid && productForm.get('description')?.touched) {
+        <div class="text-danger">Description is required.</div>
+      }
+    </div>
+  
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input id="price" type="number" formControlName="price" class="form-control">
+      @if (productForm.get('price')?.invalid && productForm.get('price')?.touched) {
+        <div class="text-danger">Price must be greater than or equal to 0.</div>
+      }
+    </div>
+  
+    <div class="mb-3">
+      <label for="image" class="form-label">Image</label>
+      <input id="image" type="file" (change)="onFileChange($event)" class="form-control">
+      @if (productForm.get('image')?.invalid && productForm.get('image')?.touched) {
+        <div class="text-danger">Image is required.</div>
+      }
+    </div>
+  
+    <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Submit</button>
+  </form>
