@@ -8,6 +8,8 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './product-form.component.html',
 })
 export class ProductFormComponent {
+  imagePreview: string | ArrayBuffer | null = null;
+ selectedFile!:File;
   productForm: FormGroup;
 
   constructor(
@@ -26,8 +28,22 @@ export class ProductFormComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.productForm.patchValue({ image: input.files[0] });
+           this.selectedFile = input.files[0] ;
+
+    }else {
+      console.warn('No file selected.');
+      this.productForm.patchValue({ image: null });
     }
+    
+
+    // Mostrar vista previa de la imagen
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result;
+    };
+    reader.readAsDataURL(this.selectedFile);
   }
+  
 
   onSubmit() {
     if (this.productForm.invalid) return;
